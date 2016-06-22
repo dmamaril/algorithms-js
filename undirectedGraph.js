@@ -183,8 +183,6 @@ Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal (node, re
 		return null;
 	}
 
-	debugger;
-
 	if (node === undefined || node === null) {
 		return result;
 	}
@@ -204,9 +202,9 @@ Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal (node, re
 	for (var i = 0 ; i < edges.length ; i++) {
 
 		var edge 			= edges[i];
-		var undiscovered 	= result.indexOf(edge) !== -1;
+		var undiscovered 	= result.indexOf(edge) === -1;
 
-		undiscoveredd && stack.push(edge) && result.push(edge);
+		undiscovered && stack.push(edge) && result.push(edge);
 	}
 
 	while(stack.length) {
@@ -216,8 +214,7 @@ Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal (node, re
 	return result;
 };
 
-var graph = new Graph();
-graph
+new Graph()
 	.addNode('a', 'c').addEdge('a', 'd').addEdge('a', 'b')
 	.addEdge('c', 'e').addEdge('d', 'f').addEdge('d', 'g')
-	.breadthFirstTraversal('a');
+	.addEdge('f', 'h').breadthFirstTraversal('a');
