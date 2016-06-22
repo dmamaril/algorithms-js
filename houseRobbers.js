@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////
 // House Robbers
-//
+// --------------------------
 // You are given a list of homes with dollar amounts associated with them
 // If you rob one house, you can't rob the houses next to them.
 //
