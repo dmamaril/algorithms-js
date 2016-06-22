@@ -40,6 +40,22 @@ Graph.prototype.contains = function contains(node){
  * @return {[type]}      [description]
  */
 Graph.prototype.removeNode = function removeNode(node){
+
+	// if node is invalid || doesnt exist, do nothing;
+	if (node === undefined || node === null || !!this._adjacencyList[node]) {
+		return null;
+	}
+
+	var edges = this._adjacencyList[node];
+
+	for (var i = 0 ; i < edges.length ; i++) {
+
+		var toNode = edges[i];
+		this.removeEdge(fromNode, toNode);
+	}
+
+	delete this._adjacencyList[node];
+	return this;
 };
 
 Graph.prototype.getEdge = function getEdge(fromNode, toNode){
