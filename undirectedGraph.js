@@ -1,4 +1,16 @@
-
+/////////////////////////////////////////////////////////////
+// Undirected Graph
+// --------------------------
+// https://en.wikipedia.org/wiki/Graph_(abstract_data_type)
+// 
+// .addNode() method that takes a new node and adds it to the graph
+// .contains() method that takes any node and returns a boolean reflecting whether it can be found in the graph
+// .removeNode() method that takes any node and removes it from the graph, if present. All edges connected to that Node are removed as well.
+// .addEdge() method that creates a edge (connection) between two nodes if they both are present within the graph
+// .getEdge() method that returns a boolean reflecting whether or not two nodes are connected
+// .removeEdge() method that removes the connection between two nodes
+// 
+/////////////////////////////////////////////////////////////
 var Graph = function(){
 	this._adjacencyList = {};
 };
