@@ -32,7 +32,7 @@ Graph.prototype.addNode = function addNode(newNode, toNode){
  * @return {[type]}      [description]
  */
 Graph.prototype.contains = function contains(node){
-	return !!this._adjacencyList[node];
+	return !this._adjacencyList.hasOwnProperty(node);
 };
 
 /**
@@ -43,7 +43,7 @@ Graph.prototype.contains = function contains(node){
 Graph.prototype.removeNode = function removeNode(node){
 
 	// if node is invalid || doesnt exist, do nothing;
-	if (node === undefined || node === null || !!this._adjacencyList[node]) {
+	if (node === undefined || node === null || !this._adjacencyList.hasOwnProperty(node)) {
 		return null;
 	}
 
@@ -76,7 +76,7 @@ Graph.prototype.getEdge = function getEdge(fromNode, toNode){
 		return null;
 	}
 
-	if (!!this._adjacencyList[fromNode]) {
+	if (!this._adjacencyList.hasOwnProperty(fromNode)) {
 		return null;
 	}
 
@@ -99,8 +99,26 @@ Graph.prototype.addEdge = function addEdge(fromNode, toNode){
 		return null;
 	}
 
-	this._adjacencyList[fromNode].push(toNode);
-	this._adjacencyList[toNode].push(fromNode);
+	// connect fromNode;
+	if (this._adjacencyList.hasOwnProperty(fromNode)) {
+
+		this._adjacencyList[fromNode].push(toNode);
+
+	} else {
+
+		this._adjacencyList[fromNode] = [toNode];
+	}
+
+	// connect toNode;
+	if (this._adjacencyList.hasOwnProperty(toNode)) {
+
+		this._adjacencyList[toNode].push(fromNode);
+
+	} else {
+
+		this._adjacencyList[toNode] = [fromNode];
+	}
+
 
 	return this;
 };
@@ -122,7 +140,7 @@ Graph.prototype.removeEdge = function removeEdge(fromNode, toNode){
 	}
 
 	// if either dont exist
-	if (!!this._adjacencyList[fromNode] || !!this._adjacencyList[toNode]) {
+	if (!this._adjacencyList.hasOwnProperty(fromNode) || !this._adjacencyList.hasOwnProperty(toNode)) {
 		return null;
 	}
 
@@ -145,7 +163,11 @@ Graph.prototype.removeEdge = function removeEdge(fromNode, toNode){
 	return this;
 };
 
-
+/**
+ * [depthFirstTraversal description]
+ * @param  {[type]} node [description]
+ * @return {[type]}      [description]
+ */
 Graph.prototype.depthFirstTraversal = function depthFirstTraversal(node) {
 
 };
@@ -155,10 +177,47 @@ Graph.prototype.depthFirstTraversal = function depthFirstTraversal(node) {
  * @param  {[type]} node [description]
  * @return {[type]}      [description]
  */
-Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal (node) {
+Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal (node, result) {
 
+	if (!this._adjacencyList.hasOwnProperty(node)) {
+		return null;
+	}
+
+	debugger;
+
+	if (node === undefined || node === null) {
+		return result;
+	}
+
+	result = result || [];
+
+	if (!Array.isArray(result)) {
+		throw new Error('Expected result to be of type Object. Instead received ' + typeof result);
+		return null;
+	}
+
+	var stack = [];
+	var edges = this._adjacencyList[node];
+
+	result.indexOf(node) === -1 && result.push(node);
+
+	for (var i = 0 ; i < edges.length ; i++) {
+
+		var edge 			= edges[i];
+		var undiscovered 	= result.indexOf(edge) !== -1;
+
+		undiscoveredd && stack.push(edge) && result.push(edge);
+	}
+
+	while(stack.length) {
+		this.breadthFirstTraversal(stack.shift(), result);
+	}
+
+	return result;
 };
 
 var graph = new Graph();
-graph.addNode('kittens');
-graph.addNode('puppies', 'fish');
+graph
+	.addNode('a', 'c').addEdge('a', 'd').addEdge('a', 'b')
+	.addEdge('c', 'e').addEdge('d', 'f').addEdge('d', 'g')
+	.breadthFirstTraversal('a');
