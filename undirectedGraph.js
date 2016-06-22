@@ -32,7 +32,7 @@ Graph.prototype.addNode = function addNode(newNode, toNode){
  * @return {[type]}      [description]
  */
 Graph.prototype.contains = function contains(node){
-	return !this._adjacencyList.hasOwnProperty(node);
+	return this._adjacencyList.hasOwnProperty(node);
 };
 
 /**
@@ -154,6 +154,9 @@ Graph.prototype.removeEdge = function removeEdge(fromNode, toNode){
 	if (toIndex !== -1) {
 		this._adjacencyList[toNode].splice(toIndex, 1);
 	}
+
+	!this._adjacencyList[fromNode].length && this.removeNode(fromNode);
+	!this._adjacencyList[toNode].length && this.removeNode(toNode);
 
 	return this;
 };
