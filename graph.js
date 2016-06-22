@@ -58,7 +58,28 @@ Graph.prototype.removeNode = function removeNode(node){
 	return this;
 };
 
+/**
+ * [getEdge description]
+ * @param  {[type]} fromNode [description]
+ * @param  {[type]} toNode   [description]
+ * @return {[type]}          [description]
+ */
 Graph.prototype.getEdge = function getEdge(fromNode, toNode){
+
+
+	if (fromNode === undefined || fromNode === null) {
+		return null;
+	}
+
+	if (toNode === undefined || toNode === null) {
+		return null;
+	}
+
+	if (!!this._adjacencyList[fromNode]) {
+		return null;
+	}
+
+	return this._adjacencyList[fromNode].indexOf(toNode) !== -1;
 };
 
 /**
