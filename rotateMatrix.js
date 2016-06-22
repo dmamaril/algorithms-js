@@ -47,39 +47,39 @@
 
 var rotateMatrix = function(matrix, direction) {
 	
-	var row 	= 0;
+	var index 	= 0;
 	var result 	= [];
-	var m 		= matrix[0].length;
-	var n 		= matrix.length;
+	var colLen 	= matrix[0].length;
+	var rowLen 	= matrix.length;
 
 	direction = (direction !== 1 && direction !== -1) ? 1 : direction;
 
 	if (direction === 1) {
 
-		for (var i = n-1 ; i >= 0 ; i--) {
+		for (var i = rowLen - 1 ; i >= 0 ; i--) {
 
-			for (var j = 0 ; j < m ; j++) {
-				result[j] 		= result[j] || [];
-				result[j][row] 	= matrix[i][j];
+			for (var j = 0 ; j < colLen ; j++) {
+
+				result[j] 			= result[j] || [];
+				result[j][index] 	= matrix[i][j];
 			}
 
-			row++;
+			index++;
 		}
 
 	}
 
-	// 2outer loops & 4 inners;
 	if (direction === -1) {
 
-		for (var i = m-1 ; i >= 0 ; i--) {
+		for (var i = colLen - 1 ; i >= 0 ; i--) {
 
-			for (var j = n-1 ; j >= 0 ; j--) {
+			for (var j = rowLen - 1 ; j >= 0 ; j--) {
 
-				result[row] 	= result[row] || [];
-				result[row][j] 	= matrix[j][i];
+				result[index] 		= result[index] || [];
+				result[index][j] 	= matrix[j][i];
 			}
 	
-			row++;
+			index++;
 		}
 
 	}
