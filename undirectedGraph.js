@@ -1,3 +1,4 @@
+
 var Graph = function(){
 	this._adjacencyList = {};
 };
@@ -144,19 +145,17 @@ Graph.prototype.removeEdge = function removeEdge(fromNode, toNode){
 	return this;
 };
 
-/**
- * [depthFirstTraversal description]
- * @return {[type]} [description]
- */
-Graph.prototype.depthFirstTraversal = function depthFirstTraversal() {
+
+Graph.prototype.depthFirstTraversal = function depthFirstTraversal(node) {
 
 };
 
 /**
  * [breadthFirstTraversal description]
- * @return {[type]} [description]
+ * @param  {[type]} node [description]
+ * @return {[type]}      [description]
  */
-Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal () {
+Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal (node) {
 
 };
 
