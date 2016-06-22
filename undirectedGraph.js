@@ -155,11 +155,6 @@ Graph.prototype.removeEdge = function removeEdge(fromNode, toNode){
 		this._adjacencyList[toNode].splice(toIndex, 1);
 	}
 
-	// should i be killing the nodes just because they dont have edges?
-	// leave commented in the mean time; the answer should be NO;
-	// !this._adjacencyList[fromNode].length && this.removeNode(fromNode);
-	// !this._adjacencyList[toNode].length && this.removeNode(toNode);
-
 	return this;
 };
 
@@ -168,8 +163,36 @@ Graph.prototype.removeEdge = function removeEdge(fromNode, toNode){
  * @param  {[type]} node [description]
  * @return {[type]}      [description]
  */
-Graph.prototype.depthFirstTraversal = function depthFirstTraversal(node) {
+Graph.prototype.depthFirstTraversal = function depthFirstTraversal(node, result) {
 
+	if (!this._adjacencyList.hasOwnProperty(node)) {
+		return null;
+	}
+
+	if (node === undefined || node === null) {
+		return result;
+	}
+
+	result = result || [];
+
+	if (!Array.isArray(result)) {
+		throw new Error('Expected result to be of type Object. Instead received ' + typeof result);
+		return null;
+	}
+
+	var edges = this._adjacencyList[node];
+
+	result.indexOf(node) === -1 && result.push(node);
+
+	for (var i = 0 ; i < edges.length ; i++) {
+		
+		var edge 			= edges[i];
+		var undiscovered 	= result.indexOf(edge) === -1;
+
+		undiscovered && result.push(edge) && this.depthFirstTraversal(edge, result);
+	}
+
+	return result;
 };
 
 /**
@@ -194,7 +217,7 @@ Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal (node, re
 		return null;
 	}
 
-	var stack = [];
+	var queue = [];
 	var edges = this._adjacencyList[node];
 
 	result.indexOf(node) === -1 && result.push(node);
@@ -204,11 +227,11 @@ Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal (node, re
 		var edge 			= edges[i];
 		var undiscovered 	= result.indexOf(edge) === -1;
 
-		undiscovered && stack.push(edge) && result.push(edge);
+		undiscovered && queue.push(edge) && result.push(edge);
 	}
 
-	while(stack.length) {
-		this.breadthFirstTraversal(stack.shift(), result);
+	while(queue.length) {
+		this.breadthFirstTraversal(queue.shift(), result);
 	}
 
 	return result;
@@ -217,4 +240,4 @@ Graph.prototype.breadthFirstTraversal = function breadthFirstTraversal (node, re
 new Graph()
 	.addNode('a', 'c').addEdge('a', 'd').addEdge('a', 'b')
 	.addEdge('c', 'e').addEdge('d', 'f').addEdge('d', 'g')
-	.addEdge('f', 'h').breadthFirstTraversal('a');
+	.addEdge('f', 'h').addEdge('f', 'a').addEdge('h', 'h').depthFirstTraversal('a');
