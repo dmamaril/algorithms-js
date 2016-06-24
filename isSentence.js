@@ -42,3 +42,25 @@ var dictionary = {
 
 isSentenceDP('iamuber');
 // isSentenceDP('ixam');
+
+
+// initial implementation;
+// function isSentence(str) {
+    
+//     function findSentences(index, word) {
+    
+//         if (dictionary[word] && index === str.length-1) {
+//                return true;
+//         }
+        
+//         if (index >= str.length) {
+//             return false;
+//         }
+        
+//         index++;
+//         var letter = str[index];
+//         return dictionary[word] ? findSentences(index, letter) : findSentences(index, word + letter);
+//     }
+
+//     return findSentences(0, str[0]);
+// }
