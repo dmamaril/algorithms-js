@@ -14,6 +14,8 @@
  */
 
 /**
+ *  Currenty in exponential time;
+ * 
  * @param {number[]} heights
  * @return {number}
  */
