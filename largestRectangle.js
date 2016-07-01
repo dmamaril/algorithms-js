@@ -19,54 +19,40 @@
  */
 var largestRectangleArea = function(heights) {
 
-    var min         = heights[0];
-    var sum         = heights[0];
-    var maxSoFar    = heights[0];
-    var updateIndex = 0;
-  
-    var updateSum = function (index) {
-    
-        var newSum = 0;
-        var currentHeight = heights[index];
-        
-        for (var i = updateIndex ; i <= index ; i++) {
-            
-            var height = heights[index];
-            
-            if (height >= currentHeight) {
-                newSum += currentHeight;
-            }
-        }
-        
-        sum         = newSum;
-        maxSoFar    = Math.max(newSum, maxSoFar);
-    };
-  
-    for (var i = 1 ; i < heights.length ; i++) {
-        
-        var height = heights[i];
-    
-        if (min > height) {
-    
-            min = height;
-            updateSum(i);
-            continue;
-        } 
-        
-        var newSum  = sum + min;
-        sum         = Math.max(newSum, height);
-        maxSoFar    = Math.max(sum, maxSoFar);
+    var largest = 0;
+    var memo    = {};
 
-        if (newSum <= height) {
-            updateIndex = i;
-            min         = height;
+    if (!Array.isArray(heights)) return;
+
+    for (var i = 0 ; i < heights.length ; i++) {
+
+        var height  = heights[i];
+        var sum     = 0;
+
+        if (memo[height]) continue;
+
+        for (var j = 0 ; j < heights.length ; j++) {
+
+            var innerHeight = heights[j];
+
+            if (height <= innerHeight) {
+
+                sum += height;
+
+                if (sum > largest) largest = sum;
+            
+            } else {
+
+                sum = 0;
+            }
+
         }
     }
-    
-    
-    return maxSoFar || 0;
+
+    return largest;
 };
 
-largestRectangleArea([2,1,5,6,2,3]);
-largestRectangleArea([1,2,3,4,5]);
-largestRectangleArea([1,2,2]);
+// largestRectangleArea([2,1,5,6,2,3]); // 10
+// largestRectangleArea([1,2,3,4,5]); // 9
+// largestRectangleArea([1,2,2]); // 4
+// largestRectangleArea([9, 0]); // 9;
