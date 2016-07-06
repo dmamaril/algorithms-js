@@ -47,22 +47,23 @@ var pathSum = function(root, target) {
         return [];
     }
 
-    if (root.val > target) {
+    if (Math.abs(root.val) > Math.abs(target)) {
         return [];
     }
 
     var recurse = function (node, sum, set) {
-        if (sum === target) {
+
+        var left  = node.left;
+        var right = node.right;
+
+        if (Math.abs(sum) > Math.abs(target)) {
+            return;
+        }
+
+        if (sum === target && left === null && right === null) {
             result.push(set);
             return;
         }
-
-        if (sum > target) {
-            return;
-        }
-
-        var left = node.left;
-        var right = node.right;
 
         if (isValidNode(left)) {
             recurse(left, sum + left.val, set.concat(left.val));
