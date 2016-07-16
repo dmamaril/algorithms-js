@@ -22,12 +22,6 @@
  *     [3]
  * ]
  */
-
-
-/**
- * @param {TreeNode} root
- * @return {number[][]}
- */
 var levelOrderBottom = function(root) {
 
     var set = [];
